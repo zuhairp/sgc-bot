@@ -16,13 +16,13 @@ async function checkShow(context, client, seriesId) {
     }
     catch (err)
     {
-        if (err.response.status != 404)
+        if (err.response && err.response.status == 404)
         {
-            throw err;
+            // 404 error means nothing aired today (assuming series id exists....)
+            return null;
         }
 
-        // 404 error means nothing aired today (assuming series id exists....)
-        return null;
+        throw err;
     }
 
     try
