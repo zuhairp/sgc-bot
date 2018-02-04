@@ -124,7 +124,7 @@
                     "properties": {
                         "RepoUrl": "[parameters('repoUrl')]",
                         "branch": "[parameters('branch')]",
-                        "IsManualIntegration": true
+                        "IsManualIntegration": false
                     }
                 }
             ]
