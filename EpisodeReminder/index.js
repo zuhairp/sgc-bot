@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const TVDB = require('node-tvdb')
-const spacetime = require('spacetime/immutable')
+const spacetime = require('spacetime')
 
 let config = require('../' + process.env["CONFIG_FILE"]);
 
@@ -14,6 +14,11 @@ function formatMessageText(info) {
 
 function isNotFoundError(err) {
     return err.response && err.response.status == 404;
+}
+
+function currentTimeToNearestQuarterHour()
+{
+    return spacetime.now('America/New_York').startOf('quarterHour').format('h:mm a');
 }
 
 class EpisodeReminderHandler {
@@ -49,15 +54,19 @@ class EpisodeReminderHandler {
             const info = await this.getInfoForReminder(seriesId);
             if (info)
             {
-                const text = formatMessageText(info); 
-                this.azureContext.log(text);
-                await this.postPinnedMessageToDiscordChannel(channelName, text);
+                const current = currentTimeToNearestQuarterHour();
+                if (current === info['airsTime'])
+                {
+                    const text = formatMessageText(info);
+                    this.azureContext.log(text);
+                    await this.postPinnedMessageToDiscordChannelAsync(channelName, text);
+                }
             }
         }
     }
 
     async getInfoForReminder(seriesId) {
-        const episode = await this.getEpisodeForToday(seriesId);
+        const episode = await this.getEpisodeForTodayAsync(seriesId);
         if (episode) {
             const series = await this.tvdbClient.getSeriesById(seriesId);
             return {
@@ -71,13 +80,13 @@ class EpisodeReminderHandler {
         return null;
     }
 
-    async postPinnedMessageToDiscordChannel(channelName, text) {
+    async postPinnedMessageToDiscordChannelAsync(channelName, text) {
         const channel = this.discordServer.channels.find("name", channelName);
         const message = await channel.send(text);
         await message.pin();
     }
 
-    async getEpisodeForToday(seriesId) {
+    async getEpisodeForTodayAsync(seriesId) {
         try {
             const today = spacetime.now('America/New_York').format('iso-short');
             const episodes = await this.tvdbClient.getEpisodesByAirDate(seriesId, today);
@@ -94,7 +103,6 @@ class EpisodeReminderHandler {
             throw err;
         }
     }
-
 }
 
 module.exports = function (context) {
