@@ -5,7 +5,7 @@ const spacetime = require('spacetime/immutable')
 let config = require('../' + process.env["CONFIG_FILE"]);
 
 // Uncomment the following for testing purposes
-spacetime.now = () => spacetime('February 2, 2018 18:00:03', 'America/Los_Angeles');
+// spacetime.now = () => spacetime('February 2, 2018 18:00:03', 'America/Los_Angeles');
 
 function formatMessageText(info) {
     const messageText = `Episode ${info['seasonNum']}x${info['episodeNum']} - "${info['episodeName']}" airing now. Mute channel to avoid spoilers`;
