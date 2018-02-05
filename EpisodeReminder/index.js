@@ -77,11 +77,8 @@ async function checkShowsAsync(context, server) {
 
 module.exports = function (context) {
     const client = new Discord.Client();
-    context.log(config);
-    context.log(process.env["DISCORD_BOT_TOKEN"]);
     
     client.on('ready', () => {
-        context.log("Ready");
         const server = client.guilds.get(process.env["SERVER_ID"])
         checkShowsAsync(context, server)
             .then(() => context.done())

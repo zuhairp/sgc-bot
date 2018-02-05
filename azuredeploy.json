@@ -134,11 +134,11 @@
                         },
                         {
                             "name": "SERVER_ID",
-                            "value": "[parameters('tvdbKey')]"
+                            "value": "[parameters('serverId')]"
                         },
                         {
                             "name": "CONFIG_FILE",
-                            "value": "[parameters('discordBotToken')]"
+                            "value": "[parameters('configFileName')]"
                         }
                     ]
                 }
