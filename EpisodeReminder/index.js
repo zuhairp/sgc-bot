@@ -1,12 +1,20 @@
+const Discord = require('discord.js')
 const TVDB = require('node-tvdb')
 const spacetime = require('spacetime')
 
-async function checkShow(context, client, seriesId) {
+let config = require('../' + process.env["CONFIG_FILE"]);
+
+// Uncomment the following for testing purposes
+spacetime.now = () => spacetime('February 2, 2018 18:00:03', 'America/Los_Angeles');
+
+async function checkShowAsync(context, client, seriesId) {
     let episode = null;
 
     try
     {
-        const episodes = await tvdbClient.getEpisodesByAirDate(seriesId, '2018-01-18');
+        const today = spacetime.now()
+        today.goto('America/New_York')
+        const episodes = await tvdbClient.getEpisodesByAirDate(seriesId, today.format('iso-short'));
         if (episodes.length == 0)
         {
             return null;
@@ -42,19 +50,43 @@ async function checkShow(context, client, seriesId) {
     }
 }
 
-async function checkShowsAsync(context) {
-    tvdbClient = new TVDB('FC46768E0F90D59B');
-    const episodeInfo = await checkShow(context, tvdbClient, '257655');
-    if (episodeInfo !== null)
+async function checkShowsAsync(context, server) {
+    tvdbClient = new TVDB(process.env['TVDB_KEY']);
+    const shows = config['shows']
+
+    for (let show of shows)
     {
-        s = spacetime.now().startOf('quarterHour');
-        s.goto('America/Chicago');
-        context.log(s.format('time'));
+        const seriesId = show['id'];
+        const channelName = show['channel'];
+        const episodeInfo = await checkShowAsync(context, tvdbClient, seriesId);
+        if (episodeInfo !== null) {
+            s = spacetime.now().startOf('quarterHour');
+            s.goto('America/New_York');
+            const currentTime = s.format('h:mm a');
+            if (episodeInfo['airsTime'] === currentTime) {
+                const messageText = `Episode ${episodeInfo['seasonNum']}x${episodeInfo['episodeNum']} - "${episodeInfo['episodeName']}" airing now. Mute channel to avoid spoilers`;
+                context.log(messageText);
+                const channel = server.channels.find("name", channelName);
+                channel.send(messageText)
+                    .then(message => message.pin())
+                    .catch(err => context.log.error(err));
+            }
+        }
     }
 }
 
 module.exports = function (context) {
-    checkShowsAsync(context)
-        .then(() => context.done())
-        .catch(err => context.done(err));
+    const client = new Discord.Client();
+    context.log(config);
+    context.log(process.env["DISCORD_BOT_TOKEN"]);
+    
+    client.on('ready', () => {
+        context.log("Ready");
+        const server = client.guilds.get(process.env["SERVER_ID"])
+        checkShowsAsync(context, server)
+            .then(() => context.done())
+            .catch(err => context.done(err));
+    });
+
+    client.login(process.env["DISCORD_BOT_TOKEN"]);
 };
