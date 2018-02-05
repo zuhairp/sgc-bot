@@ -5,7 +5,7 @@ const spacetime = require('spacetime')
 let config = require('../' + process.env["CONFIG_FILE"]);
 
 // Uncomment the following for testing purposes
-spacetime.now = () => spacetime('February 2, 2018 18:00:03', 'America/Los_Angeles');
+// spacetime.now = () => spacetime('February 2, 2018 18:00:03', 'America/Los_Angeles');
 
 async function checkShowAsync(context, client, seriesId) {
     let episode = null;
