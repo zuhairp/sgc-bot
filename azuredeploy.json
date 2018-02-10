@@ -26,6 +26,24 @@
                 "description": "TVDB API key"
             }
         },
+        "discordBotToken": {
+            "type": "string",
+            "metadata": {
+                "description": "The token for the discord bot account"
+            }
+        },
+        "serverId": {
+            "type": "string",
+            "metadata": {
+                "description": "The id of the server the bot belongs to"
+            }
+        },
+        "configFileName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the config file to use"
+            }
+        },
         "repoUrl": {
             "type": "string",
             "metadata": {
@@ -104,11 +122,23 @@
                         },
                         {
                             "name": "WEBSITE_NODE_DEFAULT_VERSION",
-                            "value": "6.5.0"
+                            "value": "8.5.0"
                         },
                         {
                             "name": "TVDB_KEY",
                             "value": "[parameters('tvdbKey')]"
+                        },
+                        {
+                            "name": "DISCORD_BOT_TOKEN",
+                            "value": "[parameters('discordBotToken')]"
+                        },
+                        {
+                            "name": "SERVER_ID",
+                            "value": "[parameters('serverId')]"
+                        },
+                        {
+                            "name": "CONFIG_FILE",
+                            "value": "[parameters('configFileName')]"
                         }
                     ]
                 }
