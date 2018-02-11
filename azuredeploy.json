@@ -26,12 +26,6 @@
                 "description": "TVDB API key"
             }
         },
-        "tmdbKey": {
-            "type": "string",
-            "metadata": {
-                "description": "TVDB API key"
-            }
-        },
         "discordBotToken": {
             "type": "string",
             "metadata": {
@@ -133,10 +127,6 @@
                         {
                             "name": "TVDB_KEY",
                             "value": "[parameters('tvdbKey')]"
-                        },
-                        {
-                            "name": "TMDB_KEY",
-                            "value": "[parameters('tmdbKey')]"
                         },
                         {
                             "name": "DISCORD_BOT_TOKEN",

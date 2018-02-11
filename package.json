@@ -18,6 +18,7 @@
   "homepage": "https://github.com/zuhairp/sgc-bot#readme",
   "dependencies": {
     "discord.js": "^11.3.0",
+    "moviedb": "^0.2.10",
     "node-tvdb": "^4.0.0",
     "spacetime": "^3.1.0"
   }
