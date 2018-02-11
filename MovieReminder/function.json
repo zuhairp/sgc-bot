@@ -1,0 +1,11 @@
+{
+  "disabled": false,
+  "bindings": [
+    {
+      "name": "movieTimer",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "* * 11,15 * * *"
+    }
+  ]
+}

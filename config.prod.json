@@ -12,5 +12,48 @@
             "id": 332027,
             "channel": "runaways"
         }
+    ],
+
+    "movies": [
+        {
+            "name": "Black Panther",
+            "date": "2018-02-15",
+            "channel": "blackpanther"
+        },
+        {
+            "name": "Avengers: Infinity War",
+            "date": "2018-05-03",
+            "channel": "avengers"
+        },
+        {
+            "name": "Deadpool",
+            "date": "2018-05-17",
+            "channel": "deadpool"
+        },
+        {
+            "name": "Solo: A Star Wars Story",
+            "date": "2018-05-24",
+            "channel": "starwars"
+        },
+        {
+            "name": "Ant-Man and the Wasp",
+            "date": "2018-07-05",
+            "channel": "antman"
+        },
+        {
+            "name": "Venom",
+            "date": "2018-10-04",
+            "channel": "venom"
+        },
+        {
+            "name": "X-Men: Dark Pheonix",
+            "date": "2018-11-01",
+            "channel": "xmen"
+        },
+        {
+            "name": "Aquaman",
+            "date": "2018-12-20",
+            "channel": "aquaman"
+        }
     ]
 }
