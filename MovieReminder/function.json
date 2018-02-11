@@ -2,10 +2,10 @@
   "disabled": false,
   "bindings": [
     {
-      "name": "myTimer",
+      "name": "movieTimer",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "*/15 * * * * *"
+      "schedule": "* * 11,15 * * *"
     }
   ]
 }
