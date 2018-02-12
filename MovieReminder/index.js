@@ -21,7 +21,6 @@ class MovieReminderHandler {
     constructor (azureContext) {
         this.azureContext = azureContext;
         this.discordClient = new Discord.Client();
-        this.tmdbClient = MovieDB(process.env['TMDB_KEY']);
         this.movies = config['movies'];
 
         this.discordClient.on('ready', this.onDiscordClientReady.bind(this));
