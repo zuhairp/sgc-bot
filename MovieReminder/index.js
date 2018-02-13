@@ -1,5 +1,4 @@
 const Discord = require('discord.js')
-const MovieDB = require('moviedb')
 const spacetime = require('spacetime/immutable')
 
 let config = require('../' + process.env["CONFIG_FILE"]);
